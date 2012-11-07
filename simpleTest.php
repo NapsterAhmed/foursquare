@@ -57,10 +57,12 @@ function viewSource() {
 
 <h2>Get a test user's checkins</h2>
 <?php
-$creds = $fsObj->get("/users/{$userId}/checkins");
+$offset=0;
+$limit = 250;
+do {
+foreach($fsObj->get("/users/{$userId}/checkins") as $creds) {
+	var_dump($creds->response);
+}
+  $offset += $limit;
+} while(count($fsObj->get("/users/{$userId}/checkins") >= $limit));
 ?>
-<div style="height: 400px; overflow: auto; width: 100%; border: 2px solid #ccc;">
-	<pre>
-		<?php var_dump($creds->response); ?>
-	</pre>
-</div>
